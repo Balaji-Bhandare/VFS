@@ -37,7 +37,7 @@ def prediction(stock, n_days):
                                                         shuffle=False)
 
     gsc = GridSearchCV(
-        estimator=SVR(kernel='rbf'),
+        estimator = SVR(kernel='rbf'),
         param_grid={
             'C': [0.001, 0.01, 0.1, 1, 100, 1000],
             'epsilon': [
@@ -61,8 +61,6 @@ def prediction(stock, n_days):
                    gamma=best_params["gamma"],
                    max_iter=-1)
 
-    # Support Vector Regression Models
-
     # RBF model
     #rbf_svr = SVR(kernel='rbf', C=1000.0, gamma=4.0)
     rbf_svr = best_svr
@@ -79,22 +77,10 @@ def prediction(stock, n_days):
         current += timedelta(days=1)
         dates.append(current)
 
-    # plot Results
-    # fig = go.Figure()
-    # fig.add_trace(
-    #     go.Scatter(x=np.array(x_test).flatten(),
-    #                y=y_test.values.flatten(),
-    #                mode='markers',
-    #                name='data'))
-    # fig.add_trace(
-    #     go.Scatter(x=np.array(x_test).flatten(),
-    #                y=rbf_svr.predict(x_test),
-    #                mode='lines+markers',
-    #                name='test'))
     fig = go.Figure()
     fig.add_trace(
         go.Scatter(
-            x=dates,  # np.array(ten_days).flatten(), 
+            x=dates, 
             y=rbf_svr.predict(output_days),
             mode='lines+markers',
             name='data'))
